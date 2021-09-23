@@ -1,0 +1,24 @@
+---
+title: "hw1"
+author: "N.N."
+date: "9/22/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+#### My name is Nevyn, and I'm a first-year PhD student in Arthur Porto's lab. There we're currently building a deep-learning model to classify images of bryozoan colonies according to genus. Arthur recommended that I take this course early, as it is intended to kick-off a branch of data science courses that will be offered in the coming years. I finished my undergrad with a degree in Computer Science and Biology, but I primarily work with Java and Python, so I'm hoping to improve my skills with R through this course. Since the core of my work is in machine/deep learning, I am most interested in this application of data science. 
+
+
+```{bash}
+git version
+R --version
+```
+
+
