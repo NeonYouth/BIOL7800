@@ -35,7 +35,7 @@ mtcars$mpg2 = 'null'
 mtcars$mpg2[mtcars$mpg < 16] = 'Low'
 mtcars$mpg2[mtcars$mpg >= 16 & mtcars$mpg < 21 ] = 'Low_intermediate'
 mtcars$mpg2[mtcars$mpg >= 21 & mtcars$mpg < 26 ] = 'Intermediate_high'
-mtcars$mpg2[mtcars$mpg >= 26] = 'Low_intermediate'
+mtcars$mpg2[mtcars$mpg >= 26] = 'High'
 ```
 
 
