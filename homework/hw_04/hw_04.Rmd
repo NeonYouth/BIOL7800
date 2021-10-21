@@ -1,0 +1,50 @@
+---
+title: "BIOL 7800 - Nevyn Neal - Homework 4"
+author: "N.N."
+date: "10/21/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+```{r}
+library(tidyverse)
+library(rvest)
+library(stringr)
+
+page = read_html("https://introdatasci.dlilab.com/schedule_materials/")
+
+table = page %>%
+        html_nodes("table") %>%
+        html_table(fill=TRUE)
+table_df = data.frame(table)
+table_df
+```
+
+## Question 2
+```{r}
+table_df$month = sapply(table_df$Date, str_extract, "[:alpha:]+")
+table_df$day = sapply(table_df$Date, str_extract, "[:digit:]+")
+table_df
+```
+
+## Question 3
+```{r}
+df1 = group_by(table_df, month)
+df2 = summarise(df1, freq = n())
+df2 = df2[order(-df2$freq),]
+df2
+```
+
+## Question 4
+```{r}
+topic_lists = sapply(table_df$Topic, str_split, " ")
+topics = sapply(topic_lists, str_extract, "[:alpha:]+")
+words = unlist(topics)
+top5 = tail(sort(table(words)), 5)
+top5
+```
+
