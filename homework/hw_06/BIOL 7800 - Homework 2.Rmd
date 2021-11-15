@@ -1,0 +1,78 @@
+---
+title: "BIOL 4800 - Nevyn Neal - Homework 2"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+## Question 1
+To obtain equilibria of dN/dt (denoted by N*) we solve for all values of N, such that dN/dt = 0:
+
+N* = 0
+N* = C
+N* = K
+
+Determining whether those equilibria are stable or unstable involves taking the partial derivative of dN/dt with respect to N:
+
+```{r}
+#growth-rate
+dN_dt = expression(r*N*(1-N/K)*(N/K - C/K))
+
+#initial values
+r = 1
+K = 50
+C = 10
+
+partial_derivative = deriv(dN_dt, "N")
+N = c(0, K, C)
+eval(partial_derivative)
+```
+Because the evaluation of the partial derivative of dN/dt is negative when N = 0 and N = K, these equilibria are stable. Because the equilibrium at N = C is positive, so it is unstable.
+
+Below I also show this by hand:
+
+![Question 1](C:/Users/Dell/Desktop/hw2-2.jpg)
+
+```{r}
+#Plotting the growth function and its equilibria
+N = 1:100
+plot(N, eval(dN_dt), type = "l", ylab = "Population Growth Rate (dN/dt)", xlab = "N")
+abline(h = 0) 
+N = c(0,10,50)
+points(N, eval(dN_dt), cex = 1.5)
+```
+## Question 2
+Below, the equilibrium conditions of the discrete logistic model are solved and their stability is solved for.
+
+![Question 2](C:/Users/Dell/Desktop/hw2-3.jpg)
+
+
+```{r}
+#R function of the logistic model
+logistic = function(K = 100, R = 1, N0 = 2, t = 50) {
+  N = c(N0, numeric(t))
+  for (i in 1:t) {
+    N[i + 1] = N[i]*exp(R*(1-(N[i]/K)))
+  } 
+  return(N)
+}
+
+#Values of r:
+rs = c(1.5, 2.0, 2.2, 2.6, 3.0)
+
+#Graphing the effects of R
+Ns = data.frame(sapply(rs, function(r) logistic(R = r)))
+tm = 50
+matplot(0:tm, Ns, type='l', lty = 1, lwd = .75)
+
+tmp = data.frame(R = as.factor(rs), t(Ns))
+
+Ns2 = reshape(tmp, varying = list(2:ncol(tmp)), idvar = "R",
+              v.names = "N", direction = "long")
+
+library(lattice)
+xyplot(N ~ time | R, data = Ns2, type = 'l', layout = c(3,2,1))
+
+```
+In the discrete logistic model, the stability of the system is dependent on the value of r. Past values of 2.4, the stability of the discrete system becomes chaotic, as shown when r = 2.6 and r = 3.
+
